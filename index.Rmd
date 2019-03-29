@@ -2,7 +2,7 @@
 title: "Final task Virome report"
 author: "Just a Team"
 date: "2019-03-29"
-output: github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -75,3 +75,7 @@ table3 <- table3 %>% merge(library_size) %>% mutate(percent=(n/(read_count*0.02)
 ggplot(table3 %>% mutate(timepoint=as.character(timepoint)), aes(x=arm, y=percent, fill=timepoint)) + 
     geom_bar(position="dodge", stat="identity")
 ```
+
+
+  git config --global user.email "vassili@tftak.eu"
+  git config --global user.name "vash"
