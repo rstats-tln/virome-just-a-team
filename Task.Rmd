@@ -26,4 +26,19 @@ library(here)
 ```{r}
 phage_counts <- read_csv(here("data", "phage_counts.csv"))
 library_size <- read_csv(here("data", "library_size.csv"))
+phage_counts
+library_size
+```
+```{r}
+table1 <- phage_counts %>%
+            group_by( arm, timepoint) %>%
+            count(tax_id) %>% 
+            summarize(n = n())
+```
+
+
+```{r}
+table1 <- table1 %>% transform(timepoint=as.character(timepoint))
+ggplot(table1, aes(x=arm, y=n, fill=timepoint)) + geom_bar(position="dodge", stat="identity")
+
 ```
