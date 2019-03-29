@@ -42,3 +42,36 @@ table1 <- table1 %>% transform(timepoint=as.character(timepoint))
 ggplot(table1, aes(x=arm, y=n, fill=timepoint)) + geom_bar(position="dodge", stat="identity")
 
 ```
+```{r}
+phage_counts <- phage_counts %>% mutate(subject=as.character(subject))
+
+
+table2 <- phage_counts %>%
+  group_by(arm, subject, timepoint) %>%
+  count(tax_id) %>%
+    summarise(n = n())
+table8 <- table2 %>% 
+    spread(timepoint, n) %>% 
+    rename_at(c("0","2","4"), ~str_c("tp_", .x)) %>% mutate(percent = (tp_4 - tp_0) / tp_4 * 100)
+
+ggplot(table8, aes(x=subject, y=percent, fill=arm)) + geom_bar(stat='identity') + labs(x='subject')
+```
+
+```{r}
+table5 <- phage_counts %>%
+  group_by(arm, subject, timepoint) %>%
+  count(parent_tax_id) %>%
+    summarise(n = n())
+table5
+```
+```{r}
+table3 <- phage_counts %>%
+            group_by(subject, arm, timepoint) %>%
+            count(query) %>% 
+            summarize(n = n())
+
+table3 <- table3 %>% merge(library_size) %>% mutate(percent=(n/(read_count*0.02)*100))
+
+ggplot(table3 %>% mutate(timepoint=as.character(timepoint)), aes(x=arm, y=percent, fill=timepoint)) + 
+    geom_bar(position="dodge", stat="identity")
+```
