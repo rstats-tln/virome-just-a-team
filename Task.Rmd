@@ -1,0 +1,29 @@
+---
+title: "Final task Virome report"
+author: "Just a Team"
+date: "2019-03-29"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Including libraries
+
+```{r}
+# install.packages("tidyverse")
+# install.packages("lubridate")
+# install.packages("here")
+
+library(tidyverse)
+library(lubridate)
+library(here)
+```
+
+## Reading csv's
+
+```{r}
+phage_counts <- read_csv(here("data", "phage_counts.csv"))
+library_size <- read_csv(here("data", "library_size.csv"))
+```
